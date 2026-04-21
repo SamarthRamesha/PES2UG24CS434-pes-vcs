@@ -1,6 +1,10 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -O2
-LDFLAGS = -lcrypto
+
+CFLAGS = -Wall -Wextra -O2 -I/opt/homebrew/opt/openssl@3/include
+
+LDFLAGS = -L/opt/homebrew/opt/openssl@3/lib
+
+LDLIBS = -lcrypto
 
 # ─── Main binary ─────────────────────────────────────────────────────────────
 
@@ -8,18 +12,18 @@ SRCS = object.c tree.c index.c commit.c pes.c
 OBJS = $(SRCS:.c=.o)
 
 pes: $(OBJS)
-	$(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
-%.o: %.c pes.h
+%.o: %.c pes.h tree.h index.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # ─── Test binaries ───────────────────────────────────────────────────────────
 
 test_objects: test_objects.o object.o
-	$(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
-test_tree: test_tree.o object.o tree.o
-	$(CC) -o $@ $^ $(LDFLAGS)
+test_tree: test_tree.o object.o tree.o index.o
+	$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
 # ─── Convenience targets ────────────────────────────────────────────────────
 

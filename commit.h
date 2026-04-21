@@ -23,7 +23,7 @@ typedef struct {
 //   3. Create the commit object and write it to the object store
 //   4. Update HEAD/branch ref to point to the new commit
 // Returns 0 on success, -1 on error.
-int commit_create(const char *message, ObjectID *commit_id_out);
+int commit_create(const char *message, ObjectID *commit_id);
 
 // Parse raw commit object data into a Commit struct.
 int commit_parse(const void *data, size_t len, Commit *commit_out);
