@@ -59,5 +59,3 @@ static inline const char* pes_author(void) {
 }
 
 #endif // PES_H
-
-int object_write(ObjectType type, const void *data, size_t len, ObjectID *id_out);
